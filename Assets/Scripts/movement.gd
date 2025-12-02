@@ -26,10 +26,11 @@ func look_at_mouse() -> void:
 	player.look_at(mouse_pos)
 
 func get_move_input_vector() -> Vector2:
-	return Vector2(
-		Input.get_axis("move_left", "move_right"), 
-		Input.get_axis("move_up", "move_down")
-	)
+	return Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	#return Vector2(
+		#Input.get_axis("move_left", "move_right"), 
+		#Input.get_axis("move_up", "move_down")
+	#)
 
 func movement() -> void:
 	player.velocity = input_dir.normalized() * move_speed

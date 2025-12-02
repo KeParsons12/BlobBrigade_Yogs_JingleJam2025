@@ -14,6 +14,3 @@ position_smoothing_enabled = true
 
 [node name="Attachable Node" parent="." instance=ExtResource("2_b6fju")]
 position = Vector2(-29, -17)
-
-[node name="Attachable Node2" parent="." instance=ExtResource("2_b6fju")]
-position = Vector2(50, -59)
