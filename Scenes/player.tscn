@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://ywf7yxaibu6n"]
+
+[ext_resource type="Script" uid="uid://pfchkditq7bp" path="res://Assets/Scripts/movement.gd" id="1_v0iea"]
+[ext_resource type="Texture2D" uid="uid://cnxvn8bslbgmo" path="res://icon.svg" id="2_cvnsp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v6fml"]
+radius = 7.0
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -4.7683716e-07)
+scale = Vector2(0.109375, 0.109375)
+texture = ExtResource("2_cvnsp")
+
+[node name="Movement" type="Node2D" parent="."]
+script = ExtResource("1_v0iea")
+
+[node name="Health" type="Node2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_v6fml")
