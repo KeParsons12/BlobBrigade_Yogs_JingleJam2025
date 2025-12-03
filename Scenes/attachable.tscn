@@ -5,7 +5,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_lubj5"]
 radius = 18.027756
 
-[node name="Area2D" type="Area2D" groups=["attachable"]]
+[node name="Attachable" type="Area2D" groups=["attachable"]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_lubj5")

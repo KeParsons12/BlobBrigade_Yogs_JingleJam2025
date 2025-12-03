@@ -32,7 +32,7 @@ func attach_object(obj: Node) -> void:
 	# get rid of the objs attachable node
 	obj.queue_free()
 	# parent the whole object to the player
-	obj.get_parent().reparent(self.get_parent(), true)
+	obj.get_parent().reparent(self)
 	
 	#print("attaching the object " + obj.name)
 	#print("Number of attached objects " + str(attached_objects.size()))
