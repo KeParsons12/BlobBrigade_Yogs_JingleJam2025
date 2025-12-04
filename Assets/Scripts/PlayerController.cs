@@ -1,18 +1,17 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
     // Vairables
     [SerializeField] private float moveSpeed = 10f; // Represents how fast the player can move
-    private Transform playerPos; // Reference to the players transform
-    private Vector2 moveInput;
 
-    private void Start()
+    private Vector2 moveInput;
+    private Rigidbody2D rb;
+
+    private void Awake()
     {
-        // Cache the players transform
-        playerPos = gameObject.GetComponent<Transform>();
-        // Place the player at (0,0) in the world
-        playerPos.position = Vector2.zero;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -23,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         HandleMovement(moveInput);
+        HandleRotation();
     }
 
     private Vector2 GetInputs()
@@ -35,10 +35,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement(Vector2 input)
     {
-        // Calculate the move input vector
-        Vector3 moveVector = new Vector3(input.x, input.y);
         // Apply the move input
-        playerPos.position += moveVector.normalized * moveSpeed * Time.deltaTime;
+        rb.linearVelocity = input.normalized * moveSpeed;
     }
 
     private void HandleRotation()
@@ -48,31 +46,12 @@ public class PlayerController : MonoBehaviour
         mousePos.z = 0;
 
         // Calculate the direction from mousePos to player
-        Vector3 pointerDirection = mousePos - playerPos.position;
-        float rotationAng = Mathf.Atan2(pointerDirection.y, pointerDirection.x) * Mathf.Rad2Deg; // calculate the angle the player needs to look
+        Vector3 pointerDirection = mousePos - transform.position;
+        // float in degrees
+        float rotationAng = Mathf.Atan2(pointerDirection.y, pointerDirection.x) * Mathf.Rad2Deg;
 
-        // Apply the rotation
-        playerPos.rotation = Quaternion.AngleAxis(rotationAng - 180f, Vector3.forward);
-
-        // Flip the sprite when the player is looking left or right
-        if (playerPos.transform.rotation.eulerAngles.z > 90f && playerPos.transform.rotation.eulerAngles.z < 270f)
-        {
-            //spriteRenderer.flipY = true;
-            //spriteRenderer.flipX = true;
-        }
-        else
-        {
-            //spriteRenderer.flipY = false;
-            //spriteRenderer.flipX = false;
-        }
+        // only rotate if mouse moved
+        if (pointerDirection.sqrMagnitude > 0.01f)
+            rb.SetRotation(rotationAng);
     }
-
-    //void OnTriggerEnter2D(Collider2D other)
-    //{
-    //    IPickupable pickupable = other.GetComponent<IPickupable>();
-    //    if (pickupable != null)
-    //    {
-    //        pickupable.Pickup(this.gameObject);
-    //    }
-    //}
 }
